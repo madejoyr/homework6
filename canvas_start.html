@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	    
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+
+    <script>
+
+    var canvas = document.querySelector('#myCanvas');
+    var picker = document.querySelector('#picker')
+	var ctx = canvas.getContext('2d');
+    var color = picker.value;
+    
+    
+    ctx.canvas.height = window.innerHeight * 0.8;
+    ctx.canvas.width = window.innerWidth *0.8;
+
+    var mouse = {x: 0, y: 0};
+
+    var drawing = false
+
+
+    function draw(posX, posY){
+      ctx.fillStyle = color;
+      console.log('DRAWING!')
+      ctx.beginPath();
+      ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
+      ctx.fill();
+      drawing = true
+
+    }
+
+
+    document.onkeydown = checkKey;
+	function checkKey(e) {
+
+    	e = e || window.event;
+
+    	if (e.keyCode == '40') {
+        myCanvas.addEventListener(
+      'mousemove', function(e){
+        console.log(e.x);
+        console.log(e.y);
+        draw(e.x, e.y);
+		})
+    	
+    	}
+     	if (e.keyCode == '38') {
+       		drawing = false   
+   		}
+
+	}
+
+    function changeColor(event){
+    	color=event.target.value;
+    	ctx.strokeStyle = color;
+    }
+
+    document.onkeypress=function(e){
+    	if (e.key =='r'){
+    		color='red';
+    	}
+    	if (e.key =='g'){
+    		color='green';
+    	}
+    	if (e.key =='b'){
+    		color='blue';
+    	}
+    	if (e.key =='y'){
+    		color='yellow';
+    	}
+    	if (e.key =='y'){
+    		color='yellow';
+    	}
+    	if (e.key ==' '){
+    		ctx.clearRect(0,0,canvas.width,canvas.height);
+    	}
+    }
+
+
+    picker.addEventListener('input', changeColor, false);
+
+
+
+
+  </script>
+</body>
+</html>
