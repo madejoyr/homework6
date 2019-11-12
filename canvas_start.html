@@ -32,46 +32,34 @@
 
     var mouse = {x: 0, y: 0};
 
-    var drawing = false
+    var drawing = true
 
 
     function draw(posX, posY){
-      ctx.fillStyle = color;
-      console.log('DRAWING!')
-      ctx.beginPath();
-      ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
-      ctx.fill();
-      drawing = true
-
-    }
-
-
-    document.onkeydown = checkKey;
-	function checkKey(e) {
-
-    	e = e || window.event;
-
-    	if (e.keyCode == '40') {
-        myCanvas.addEventListener(
+    	if (drawing ==true){
+      		ctx.fillStyle = color;
+      		console.log('DRAWING!')
+      		ctx.beginPath();
+      		ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
+      		ctx.fill();
+      
+  	}}
+		    
+	myCanvas.addEventListener(
       'mousemove', function(e){
         console.log(e.x);
         console.log(e.y);
         draw(e.x, e.y);
 		})
     	
-    	}
-     	if (e.keyCode == '38') {
-       		drawing = false   
-   		}
-
-	}
 
     function changeColor(event){
     	color=event.target.value;
     	ctx.strokeStyle = color;
     }
 
-    document.onkeypress=function(e){
+   window.addEventListener(
+      'keydown', function(e){
     	if (e.key =='r'){
     		color='red';
     	}
@@ -90,7 +78,15 @@
     	if (e.key ==' '){
     		ctx.clearRect(0,0,canvas.width,canvas.height);
     	}
-    }
+    	if (e.keyCode == '38') {
+       		drawing = false ;  
+   		}
+   		if (e.keyCode == '40') {
+       		drawing = true;   
+   		}
+
+
+    })
 
 
     picker.addEventListener('input', changeColor, false);
